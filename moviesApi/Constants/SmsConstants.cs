@@ -9,5 +9,6 @@ namespace moviesApi.Constants
     {
         public static string userId = "";
         public static string userKey = "";
+        public static string name = "name";
     }
 }
