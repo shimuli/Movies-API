@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA09a/vRXj7ECoDBzjs2C+KAAAAAACAAAAAAAQZgAAAAEAACAAAACwDdAHdZIhM9vZ6AdUQqolFFFX5i0O9iPlqDt0mUauxgAAAAAOgAAAAAIAACAAAAAzZkzdb5lcPGo2/vrzz6S1NJXg8hvogef3PxOZDb9M84AAAABg1Cd/R5vFZfGKF92t62G4GD9IdVKXQGeWKAs9eLsYGV/023BwNvG2hSODzIQFD0/GQe9PTxs9kUoo64x9kmQI7D4qOvoVoDV/8NdVPs88DrudvhO9t9OIH2xqHANnYJPz6fjp5xx7sbDXmigo5sMkNevUsyNhqICb+ydCWd8jAUAAAAB9zvrjGiWmsowEtiv52EmC476GYXCZI3twPRIHhYdMUgpYMNUqzUudWzDv2iO2OIbQFPOUSritjWxnTayJEEZM</EncryptedPassword>
+    <History>True|2021-08-23T08:24:05.8635619Z;True|2021-08-19T10:51:57.2715050+03:00;True|2021-08-19T10:40:41.2423087+03:00;True|2021-08-19T10:29:58.6588547+03:00;True|2021-08-18T12:21:48.9755386+03:00;True|2021-08-18T11:36:23.5369815+03:00;True|2021-08-17T22:37:49.2522942+03:00;</History>
+  </PropertyGroup>
+  <ItemGroup>
+    <EFMigrations Include="moviesApi.Data.MoviesDbContext">
+      <Value>Server=tcp:ngomaserver.database.windows.net,1433%3bInitial Catalog=moviesDb%3bPersist Security Info=False%3bUser ID=cedric%3bPassword=probook%402021%3bMultipleActiveResultSets=False%3bEncrypt=True%3bTrustServerCertificate=False%3bConnection Timeout=30%3b</Value>
+    </EFMigrations>
+  </ItemGroup>
+</Project>
