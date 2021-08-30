@@ -70,3 +70,6 @@ C:\Users\shimu\source\repos\moviesApi\moviesApi\bin\Release\net5.0\MimeKit.dll
 C:\Users\shimu\source\repos\moviesApi\moviesApi\bin\Release\net5.0\Newtonsoft.Json.dll
 C:\Users\shimu\source\repos\moviesApi\moviesApi\bin\Release\net5.0\Newtonsoft.Json.Bson.dll
 C:\Users\shimu\source\repos\moviesApi\moviesApi\bin\Release\net5.0\BouncyCastle.Crypto.dll
+C:\Users\shimu\source\repos\moviesApi\moviesApi\bin\Release\net5.0\System.Drawing.Common.dll
+C:\Users\shimu\source\repos\moviesApi\moviesApi\bin\Release\net5.0\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+C:\Users\shimu\source\repos\moviesApi\moviesApi\bin\Release\net5.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll

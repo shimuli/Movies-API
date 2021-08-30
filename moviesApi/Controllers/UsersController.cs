@@ -72,13 +72,15 @@ namespace moviesApi.Controllers
 
             var userWithSameEmail =_moviesDbContext.Users.Where(u => u.Email == registerDto.Email).SingleOrDefault();
             var userWIthSamePhone = _moviesDbContext.Users.Where(u => u.Phone == registerDto.Phone).SingleOrDefault();
-            if(userWithSameEmail != null)
+            if (userWithSameEmail != null)
             {
-                return BadRequest("User with the same email already exists");
+                return BadRequest(new { message = "User with the same email already exists" });
+
             }
-            else if(userWIthSamePhone != null)
+            if (userWIthSamePhone != null)
             {
-                return BadRequest("User with the same phone number already exists");
+               // return BadRequest("User with the same phone number already exists");
+                return BadRequest(new { message = "User with the same phone number already exists" });
             }
             else
             {
@@ -109,7 +111,7 @@ namespace moviesApi.Controllers
                 // send sms
                 string message = "Hello " + registerDto.Name +", use this code to verify your number: "+ randomNum;
 
-                Communication.sendSMs(registerDto.Phone, message);
+                //Communication.sendSMs(registerDto.Phone, message);
 
 
                 return new ObjectResult(new
@@ -271,7 +273,7 @@ namespace moviesApi.Controllers
             string code = userPhone.confirmCode; 
             string message = "Hello " + userPhone.Name + ", use this code to verify your account: " + code;
 
-            Communication.sendSMs(userPhone.Phone, message);
+            //Communication.sendSMs(userPhone.Phone, message);
             return new ObjectResult(new
             {
                 message = "Code was sent succesfully",

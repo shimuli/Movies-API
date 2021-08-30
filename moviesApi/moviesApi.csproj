@@ -19,6 +19,7 @@
     </PackageReference>
     <PackageReference Include="MimeKit" Version="2.14.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.5" />
+    <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
   </ItemGroup>
 
 </Project>

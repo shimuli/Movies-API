@@ -70,3 +70,6 @@ C:\Users\shimu\source\repos\moviesApi\moviesApi\bin\Debug\net5.0\Newtonsoft.Json
 C:\Users\shimu\source\repos\moviesApi\moviesApi\bin\Debug\net5.0\MailKit.dll
 C:\Users\shimu\source\repos\moviesApi\moviesApi\bin\Debug\net5.0\MimeKit.dll
 C:\Users\shimu\source\repos\moviesApi\moviesApi\bin\Debug\net5.0\BouncyCastle.Crypto.dll
+C:\Users\shimu\source\repos\moviesApi\moviesApi\bin\Debug\net5.0\System.Drawing.Common.dll
+C:\Users\shimu\source\repos\moviesApi\moviesApi\bin\Debug\net5.0\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+C:\Users\shimu\source\repos\moviesApi\moviesApi\bin\Debug\net5.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll

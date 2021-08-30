@@ -74,7 +74,7 @@ namespace moviesApi.Controllers
                 {
                     var filestream = new FileStream(filePath, FileMode.Create);
                     updateMovieDto.Image.CopyTo(filestream);
-                    movieupdate.ImageUrl = _baseUrl + filePath.Remove(0, 7);
+                    movieupdate.ImageUrl = _baseUrl + filePath.Remove(0, 9);
                 }
 
                 movieupdate.Name = updateMovieDto.Name;
