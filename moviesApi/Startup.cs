@@ -90,7 +90,7 @@ namespace moviesApi
             services.AddDbContext<MoviesDbContext>(option =>
             option.UseSqlServer(Configuration.GetConnectionString("DevConnectionString")));
 
-            // option.UseSqlServer(Configuration.GetConnectionString("AzureServerConnectionString")));
+             //option.UseSqlServer(Configuration.GetConnectionString("AzureServerConnectionString")));
 
             // email service
             /*       services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));

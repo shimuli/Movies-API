@@ -117,7 +117,8 @@ namespace moviesApi.Controllers
             {
                 Id = movies.Id,
                 Name = movies.Name,
-                Duration = movies.Duration,
+                PlayDate = movies.PlayingDate,
+                PlayTime = movies.PlayingTIme,
                 Language = movies.Language,
                 Rating = movies.Rating,
                 Genre = movies.Genre,
@@ -161,7 +162,8 @@ namespace moviesApi.Controllers
                                {
                                    Id = movie.Id,
                                    Name = movie.Name,
-                                   Duration = movie.Duration,
+                                   PlayDate = movie.PlayingDate,
+                                   PlayTime = movie.PlayingTIme,
                                    Language = movie.Language,
                                    Rating = movie.Rating,
                                    Genre = movie.Genre,
@@ -182,12 +184,13 @@ namespace moviesApi.Controllers
                                {
                                     Id = movie.Id,
                                     Name = movie.Name,
-                                    Duration = movie.Duration,
+                                    PlayDate = movie.PlayingDate,
+                                    PlayTime = movie.PlayingTIme,
                                     Language = movie.Language,
                                     Rating = movie.Rating,
                                     Genre = movie.Genre,
                                     Imageurl = movie.ImageUrl
-                                }).Take(4).ToListAsync();
+                                }).Take(10).ToListAsync();
             return Ok(movies);
         }
 
