@@ -38,6 +38,31 @@ namespace moviesApi.Controllers
             return StatusCode(StatusCodes.Status201Created, createReservationDto);
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> updateReservation(int id, [FromForm] CreateReservationDto updateReservationDto)
+        {
+            var reservationUpdate = await _moviesDbContext.Reservations.FindAsync(id);
+            if (reservationUpdate == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                var movies = _mapper.Map<Reservation>(updateReservationDto);
+
+                reservationUpdate.UserId = updateReservationDto.UserId;
+                reservationUpdate.Quantity = updateReservationDto.Quantity;
+                reservationUpdate.MovieId = updateReservationDto.MovieId;
+                reservationUpdate.Phone = updateReservationDto.Phone;
+                reservationUpdate.Watched = updateReservationDto.Watched;
+                reservationUpdate.ReservationTime = updateReservationDto.ReservationTime;
+
+                await _moviesDbContext.SaveChangesAsync();
+                return StatusCode(StatusCodes.Status201Created, updateReservationDto);
+            }
+        }
+
         [Authorize(Roles ="Admin")]
         [HttpGet]
         public async Task<IActionResult> GetReservarions()
@@ -53,6 +78,7 @@ namespace moviesApi.Controllers
                 MovieName = movie.Name,
                 CusomerName = customer.Name,             
                 ReservationTime = reservation.ReservationTime,
+                Watched = reservation.Watched
             }).ToListAsync();
             return Ok(booking);
         }
@@ -85,7 +111,7 @@ namespace moviesApi.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> getUserReservations(int id)
+        public async Task<IActionResult> getUserReservations(int id, bool watched)
         {
             // using join
             var booking = await (from reservation in _moviesDbContext.Reservations
@@ -93,7 +119,8 @@ namespace moviesApi.Controllers
                            customer.Id
                            join movie in _moviesDbContext.Movies on reservation.MovieId equals movie.Id
                            where customer.Id == id
-                           select new
+                                 where reservation.Watched == watched
+                                 select new
                            {
                                Id = reservation.Id,
                                MovieName = movie.Name,
@@ -105,9 +132,12 @@ namespace moviesApi.Controllers
                                TotalCost = reservation.Quantity * movie.TicketPrice,
                                PlayingDate = movie.PlayingDate,
                                PlayTime = movie.PlayingTIme,
+                               watched = reservation.Watched
                            }).ToListAsync();
             return Ok(booking);
         }
+
+
 
         [Authorize(Roles ="Admin")]
         [HttpDelete("{id}")]

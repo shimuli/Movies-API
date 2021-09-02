@@ -9,15 +9,17 @@ namespace moviesApi.Dto
     public class CreateReservationDto
     {
 
-        [Required]
+     /*   [Required]*/
         public int Quantity { get; set; }
-        [Required]
+    /*    [Required]*/
         public string Phone { get; set; }
 
-        [Required]
+        public bool Watched { get; set; }
+
+  /*      [Required]*/
         public int MovieId { get; set; }
 
-        [Required]
+      /*  [Required]*/
         public int UserId { get; set; }
 
         public DateTime ReservationTime { get; set; }

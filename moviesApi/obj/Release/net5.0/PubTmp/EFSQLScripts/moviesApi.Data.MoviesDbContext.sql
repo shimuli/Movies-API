@@ -139,3 +139,22 @@ GO
 COMMIT;
 GO
 
+BEGIN TRANSACTION;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20210901173919_AddWachedToReserve')
+BEGIN
+    ALTER TABLE [Reservations] ADD [Watched] bit NOT NULL DEFAULT CAST(0 AS bit);
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20210901173919_AddWachedToReserve')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20210901173919_AddWachedToReserve', N'5.0.9');
+END;
+GO
+
+COMMIT;
+GO
+

@@ -111,7 +111,7 @@ namespace moviesApi.Controllers
                 // send sms
                 string message = "Hello " + registerDto.Name +", use this code to verify your number: "+ randomNum;
 
-                Communication.sendSMs(registerDto.Phone, message);
+                //Communication.sendSMs(registerDto.Phone, message);
 
 
                 return new ObjectResult(new
@@ -160,8 +160,10 @@ namespace moviesApi.Controllers
                 isPhoneVerified = userPhone.PhoneVerified,
                 isEmailVerified = userPhone.EmailVerified,
                 access_token = token.AccessToken,
-                token_type = token.TokenType
-                
+                token_type = token.TokenType,
+                expires_in = token.ExpiresIn,
+               
+
                 /* expires_in = token.ExpiresIn,
                  token_type = token.TokenType,
                  creation_Time = token.ValidFrom,
@@ -273,7 +275,7 @@ namespace moviesApi.Controllers
             string code = userPhone.confirmCode; 
             string message = "Hello " + userPhone.Name + ", use this code to verify your account: " + code;
 
-            Communication.sendSMs(userPhone.Phone, message);
+            //Communication.sendSMs(userPhone.Phone, message);
             return new ObjectResult(new
             {
                 message = "Code was sent succesfully",

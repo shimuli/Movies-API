@@ -14,6 +14,8 @@ namespace moviesApi.Models
 
         public DateTime ReservationTime { get; set; }
 
+        public bool Watched { get; set; }
+
         public int MovieId { get; set; }
 
         public int UserId { get; set; }

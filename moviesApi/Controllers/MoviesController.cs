@@ -117,6 +117,10 @@ namespace moviesApi.Controllers
             {
                 Id = movies.Id,
                 Name = movies.Name,
+                Description = movies.Description,
+                Duration = movies.Duration,
+                TicketPrice = movies.TicketPrice,
+                Trailer = movies.TrailerUrl,
                 PlayDate = movies.PlayingDate,
                 PlayTime = movies.PlayingTIme,
                 Language = movies.Language,
@@ -162,6 +166,10 @@ namespace moviesApi.Controllers
                                {
                                    Id = movie.Id,
                                    Name = movie.Name,
+                                   Description = movie.Description,
+                                   Duration = movie.Duration,
+                                   TicketPrice = movie.TicketPrice,
+                                   Trailer = movie.TrailerUrl,
                                    PlayDate = movie.PlayingDate,
                                    PlayTime = movie.PlayingTIme,
                                    Language = movie.Language,
@@ -184,6 +192,10 @@ namespace moviesApi.Controllers
                                {
                                     Id = movie.Id,
                                     Name = movie.Name,
+                                    Description = movie.Description,
+                                    Duration = movie.Duration,
+                                    TicketPrice = movie.TicketPrice,
+                                    Trailer = movie.TrailerUrl,
                                     PlayDate = movie.PlayingDate,
                                     PlayTime = movie.PlayingTIme,
                                     Language = movie.Language,

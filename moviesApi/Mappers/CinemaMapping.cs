@@ -21,6 +21,7 @@ namespace moviesApi.Mappers
             CreateMap<Movie, MoviesDto>().ReverseMap();
 
             CreateMap<Reservation, CreateReservationDto>().ReverseMap();
+            CreateMap<Reservation, UpdateWatchedMovieDto>().ReverseMap();
         }
     }
 }
