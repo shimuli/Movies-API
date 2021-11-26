@@ -38,7 +38,7 @@ namespace moviesApi
             // content negotiation 
             services.AddMvc().AddXmlSerializerFormatters();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
+          
             services.AddAutoMapper(typeof(CinemaMapping));
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -70,6 +70,7 @@ namespace moviesApi
                     In = ParameterLocation.Header,
                     Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 1safsfsdfdfd\"",
                 });
+
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement {
                     {
                         new OpenApiSecurityScheme

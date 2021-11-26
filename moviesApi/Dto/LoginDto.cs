@@ -13,5 +13,6 @@ namespace moviesApi.Dto
 
         [Required]
         public string Password { get; set; }
+
     }
 }

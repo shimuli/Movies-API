@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using moviesApi.Data;
 using moviesApi.Dto;
 using moviesApi.Models;
@@ -10,28 +11,30 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace moviesApi.Controllers
 {
-    [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class MoviesController : ControllerBase
     {
-        private MoviesDbContext _moviesDbContext;
+        private readonly MoviesDbContext _moviesDbContext;
+        private readonly ILogger<MoviesController> _logger;
         string _baseUrl;
 
         private readonly IMapper _mapper;
         string userimageUrl = null;
 
-        public MoviesController(MoviesDbContext moviesDbContext, IHttpContextAccessor context, IMapper mapper)
+        public MoviesController(MoviesDbContext moviesDbContext, IHttpContextAccessor context, IMapper mapper, ILogger<MoviesController> logger)
         {
             _moviesDbContext = moviesDbContext;
             // for url
             var request = context.HttpContext.Request;
             _baseUrl = $"{request.Scheme}://{request.Host}";
             _mapper = mapper;
+            _logger = logger;
         }
 
         // POST api/<MoviesController>
@@ -39,6 +42,10 @@ namespace moviesApi.Controllers
         [HttpPost]
         public async Task<IActionResult> addMovie([FromForm] CreateMoviesDto movieDto)
         {
+            string userEmail = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            _logger.LogInformation(userEmail + " added a movie with name: "+movieDto.Name);
+
             var guid = Guid.NewGuid();
             var filePath = Path.Combine("wwwroot", guid + ".jpg");
             if (movieDto.Image != null)
@@ -60,6 +67,9 @@ namespace moviesApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> updateMovie(int id, [FromForm] CreateMoviesDto updateMovieDto)
         {
+            string userEmail = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            _logger.LogInformation(userEmail + " updated  a movie with name: " + updateMovieDto.Name);
             var movieupdate = await _moviesDbContext.Movies.FindAsync(id);
             if (movieupdate == null)
             {
@@ -96,6 +106,10 @@ namespace moviesApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
+            string userEmail = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            _logger.LogInformation(userEmail + " Deleted  a movie with id: " + id);
+
             var movie = await _moviesDbContext.Movies.FindAsync(id);
             if (movie == null)
             {
@@ -110,9 +124,13 @@ namespace moviesApi.Controllers
         [HttpGet]
         public async Task<IActionResult> AllMovies(string sort, int? pageNumber, int? pageSize)
         {
+            string userEmail = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            _logger.LogInformation("Get all Movies by: " + userEmail);
+
             int currentPageNumber = pageNumber ?? 1;
             int currentPageSize = pageSize ?? 5;
-            var allmovies = await (from movies in _moviesDbContext.Movies
+            var allmovies = await ( from movies in _moviesDbContext.Movies
             select new
             {
                 Id = movies.Id,
@@ -131,7 +149,10 @@ namespace moviesApi.Controllers
             switch (sort)
             {
                 case "desc":
-                    return Ok(allmovies.Skip((currentPageNumber - 1) * currentPageSize).Take(currentPageSize).OrderByDescending(m => m.Rating));
+                    return Ok(allmovies
+                        .Skip((currentPageNumber - 1) * currentPageSize)
+                        .Take(currentPageSize)
+                        .OrderByDescending(m => m.Rating));
 
                 case "asc":
                     return Ok(allmovies.Skip((currentPageNumber - 1) * currentPageSize).Take(currentPageSize).OrderBy(m => m.Rating));
@@ -146,6 +167,9 @@ namespace moviesApi.Controllers
         [HttpGet]
         public async Task<IActionResult> getMovieDetails(int id)
         {
+            string userEmail = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            _logger.LogInformation(userEmail + " get  a movie details with id: " + id);
             var movie = await _moviesDbContext.Movies.FindAsync(id);
             if(movie == null)
             {
@@ -160,6 +184,10 @@ namespace moviesApi.Controllers
         [HttpGet]
         public async Task<IActionResult> searchMovie(string query)
         {
+            string userEmail = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            _logger.LogInformation(userEmail + " searched for movies");
+
             var movies = await (from movie in _moviesDbContext.Movies
                                where movie.Name.StartsWith(query)
                                select new
@@ -186,6 +214,10 @@ namespace moviesApi.Controllers
         [HttpGet]
         public async Task<IActionResult> Todaymovies()
         {
+            string userEmail = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            _logger.LogInformation(userEmail + " searched for today's movie");
+
             var movies = await (from movie in _moviesDbContext.Movies
                                 where movie.PlayingDate == DateTime.Today
                                 select new

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using moviesApi.Data;
 using moviesApi.Dto;
 using moviesApi.Models;
@@ -32,8 +33,9 @@ namespace moviesApi.Controllers
         System.Random random = new System.Random();
 
         private readonly IMapper _mapper;
+        private readonly ILogger<UsersController> _logger;
 
-        public UsersController(MoviesDbContext moviesDbContext, IHttpContextAccessor context, IConfiguration configuration, IMapper mapper)
+        public UsersController(MoviesDbContext moviesDbContext, IHttpContextAccessor context, IConfiguration configuration, IMapper mapper, ILogger<UsersController> logger)
         {
             _moviesDbContext = moviesDbContext;
 
@@ -47,6 +49,7 @@ namespace moviesApi.Controllers
 
             // mapper 
             _mapper = mapper;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -55,6 +58,9 @@ namespace moviesApi.Controllers
             // image path
             string userimageUrl = null;
 
+            //string userEmail = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            _logger.LogInformation(registerDto.Name + " registered an account");
 
             var guid = Guid.NewGuid();
             var filePath = Path.Combine("wwwroot", guid + ".png");
@@ -130,7 +136,8 @@ namespace moviesApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Login([FromForm] LoginDto loginDto)
         {
-           var userPhone = await _moviesDbContext.Users.FirstOrDefaultAsync(u => u.Phone == loginDto.Phone);
+            _logger.LogInformation(loginDto.Phone + " logged in");
+            var userPhone = await _moviesDbContext.Users.FirstOrDefaultAsync(u => u.Phone == loginDto.Phone);
             if(userPhone == null)
             {
                 return NotFound();
@@ -144,9 +151,11 @@ namespace moviesApi.Controllers
             _mapper.Map<User>(loginDto);
             var claims = new[]
             {
-               new Claim(JwtRegisteredClaimNames.NameId, loginDto.Phone),
+               new Claim(JwtRegisteredClaimNames.NameId,userPhone.Email),
+               new Claim(JwtRegisteredClaimNames.Email,userPhone.Email ),
                new Claim(ClaimTypes.MobilePhone, loginDto.Phone),
                new Claim(ClaimTypes.Role, userPhone.Role),
+               new Claim(ClaimTypes.Name, userPhone.Name),
              };
             var token = _auth.GenerateAccessToken(claims);
 
@@ -176,6 +185,7 @@ namespace moviesApi.Controllers
         [HttpPost("{id}")]
         public async Task<IActionResult> VerfiyPhone(int id, [FromForm] VerifyPhoneDto verifyDto)
         {
+            _logger.LogInformation(verifyDto.Phone + " verified account");
             var getUser = await _moviesDbContext.Users.FindAsync(id);
 
             if(getUser == null)
@@ -222,6 +232,11 @@ namespace moviesApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUsers(int? pageNumber, int? pageSize)
         {
+
+            string userEmail = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            _logger.LogInformation(userEmail + " Get all users ");
+
             int currentPageNumber = pageNumber ?? 1;
             int currentPageSize = pageSize ?? 7;
 
@@ -243,6 +258,9 @@ namespace moviesApi.Controllers
         [HttpGet]
         public async Task<IActionResult> userDetails(int userId)
         {
+            string userEmail = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            _logger.LogInformation(userEmail + " Get user details with Id "+ userId);
             //var user = await _moviesDbContext.Users.Where(a => a.Id == userId).Include(a => a.Songs).ToListAsync();
             var user = await _moviesDbContext.Users.FindAsync(userId);
             if (user == null)
@@ -258,6 +276,10 @@ namespace moviesApi.Controllers
         [HttpGet]
         public async Task<IActionResult> resendCode(string phonenumber)
         {
+
+            string userEmail = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            _logger.LogInformation("Code resent to " + phonenumber);
             //var user = await _moviesDbContext.Users.Where(a => a.Id == userId).Include(a => a.Songs).ToListAsync();
 
             var userPhone = await _moviesDbContext.Users.FirstOrDefaultAsync(u => u.Phone == phonenumber);
